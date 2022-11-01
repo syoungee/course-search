@@ -4,16 +4,19 @@
 }
 
 .layout {
+  display: block;
   width: calc(1280-24) px;
 }
 
-.search-area {
+.search-area,
+.select-area {
   background-color: white;
   width: 1024px;
+  height: 44px;
   border: 1px solid rgb(201, 202, 204);
   border-radius: 4px;
   display: flex;
-  margin: 0 auto;
+  margin: 6px auto 6px auto;
   align-items: center;
 }
 
@@ -34,6 +37,44 @@
   border: none;
 }
 
+.category {
+  width: 96px;
+  height: 44px;
+  line-height: 46px;
+  text-align: center;
+  background-color: rgb(240, 241, 243);
+  border-radius: 4px 0 0px 4px;
+  border-right: 1px solid rgb(201, 202, 204);
+}
+
+.chip-area {
+  align-items: center;
+  display: flex;
+}
+
+.button {
+  background-color: rgb(240, 241, 243);
+  border: 1px solid rgb(240, 241, 243);
+  cursor: pointer;
+  border-radius: 13px;
+  padding: 4px 12px;
+  margin: 8px;
+}
+
+.button:hover {
+  background-color: rgb(201, 202, 204);
+  color: rgba(0, 0, 0, 0.581);
+}
+
+.onclick {
+  background-color: rgb(82, 79, 161);
+  color: white;
+}
+
+.total-count {
+  border-bottom: 1px solid rgb(201, 202, 204);
+}
+
 input:focus {
   outline: none !important;
 }
@@ -46,7 +87,8 @@ input:focus {
   .layout {
     width: 100%;
   }
-  .search-area {
+  .search-area,
+  .select-area {
     width: 100%;
   }
 }
