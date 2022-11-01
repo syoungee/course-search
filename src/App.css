@@ -1,5 +1,52 @@
-.App {
+.container {
+  padding: 24px;
+  text-align: center;
 }
 
-.App-header {
+.layout {
+  width: calc(1280-24) px;
+}
+
+.search-area {
+  background-color: white;
+  width: 1024px;
+  border: 1px solid rgb(201, 202, 204);
+  border-radius: 4px;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.icon-area {
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+}
+
+.input-area {
+  width: 100%;
+  margin: 0px 16px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 12px 0px;
+  border: none;
+}
+
+input:focus {
+  outline: none !important;
+}
+
+@media (max-width: 1280px) {
+  .container {
+    width: calc(100%-24px);
+    text-align: left;
+  }
+  .layout {
+    width: 100%;
+  }
+  .search-area {
+    width: 100%;
+  }
 }
