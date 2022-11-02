@@ -81,6 +81,14 @@ function App() {
         </div>
         <div className="total-count"> 전체 121개 </div>
         <div className="course-body">
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
+          <div className="course-card"></div>
           {/* TODO: 강의 목록 뿌려주기 */}
           {/* TODO: pagination 구현 */}
         </div>

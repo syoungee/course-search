@@ -72,7 +72,28 @@
 }
 
 .total-count {
+  text-align: left;
+  margin: 30px auto 0px auto;
+  font-size: small;
   border-bottom: 1px solid rgb(201, 202, 204);
+}
+
+.course-body {
+  display: grid;
+  padding: 28px 0px;
+  grid-template-columns: repeat(auto-fill, 296px);
+  column-gap: 16px;
+  row-gap: 16px;
+  justify-content: center;
+}
+
+.course-card {
+  background-color: bisque;
+  width: 296px;
+  height: 338px;
+  border-radius: 8px;
+  display: inline-block;
+  overflow: hidden;
 }
 
 input:focus {
@@ -80,13 +101,12 @@ input:focus {
 }
 
 @media (max-width: 1280px) {
-  .container {
+  .container,
+  .total-count {
     width: calc(100%-24px);
     text-align: left;
   }
-  .layout {
-    width: 100%;
-  }
+  .layout,
   .search-area,
   .select-area {
     width: 100%;
