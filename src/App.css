@@ -81,7 +81,7 @@
 .course-body {
   display: grid;
   padding: 28px 0px;
-  grid-template-columns: repeat(auto-fill, 296px);
+  grid-template-columns: repeat(auto-fill, minmax(296px, 4fr));
   column-gap: 16px;
   row-gap: 16px;
   justify-content: center;
@@ -164,6 +164,7 @@ input:focus {
     text-align: left;
   }
   .layout,
+  .course-body,
   .search-area,
   .select-area {
     width: 100%;

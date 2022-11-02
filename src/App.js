@@ -106,9 +106,9 @@ function App() {
                   <p className="card-description">{item.short_description}</p>
                   <div className="card-icon-container">
                     <div className="card-icon-text">
-                      <p>{`난이도: ${item.info_summary_visibility_dict.level || '미설정'} `}</p>
-                      <p>{`수업: ${item.info_summary_visibility_dict.level || '온라인'} `}</p>
-                      <p>{`기간: ${item.info_summary_visibility_dict.level || '무제한'} `}</p>
+                      <p>{`난이도: ${'미설정' || item.info_summary_visibility_dict.level} `}</p>
+                      <p>{`수업: ${'온라인' || item.info_summary_visibility_dict.level} `}</p>
+                      <p>{`기간: ${'무제한' || item.info_summary_visibility_dict.level} `}</p>
                     </div>
                     <img src={item.logo_file_url} className="card-logo" alt="logo_file_url" />
                   </div>
