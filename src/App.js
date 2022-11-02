@@ -2,6 +2,7 @@ import './App.css';
 import { getCourses } from './api/apis';
 import { useState, useEffect, useMemo } from 'react';
 import CourseBoard from './components/CourseBoard';
+import Pagination from './components/Pagination';
 import debounce from 'lodash.debounce';
 
 function App() {
@@ -110,17 +111,6 @@ function App() {
     }
   };
 
-  const pageOnClick = (e) => {
-    const value = e.target.getAttribute('value');
-    if (value !== '-1' || value !== '+1') {
-      setPageIndex(parseInt(value));
-    } else if (value === '-1') {
-      if (value >= 2) setPageIndex(parseInt(value) - 1);
-    } else if (value === '+1') {
-      if (value < 20) setPageIndex(parseInt(value) + 1);
-    }
-  };
-
   return (
     <div className="container">
       <div className="layout">
@@ -160,32 +150,7 @@ function App() {
         {<CourseBoard courses={courses}></CourseBoard>}
 
         {/* TODO: pagination 구현 */}
-
-        <div className="page-container">
-          <span>
-            <div className="index" value="-1" onClick={(e) => pageOnClick(e)}>
-              {`<`}
-            </div>
-            <div className="index" value="1" onClick={(e) => pageOnClick(e)}>
-              1
-            </div>
-            <div className="index" value="2" onClick={(e) => pageOnClick(e)}>
-              2
-            </div>
-            <div className="index" value="3" onClick={(e) => pageOnClick(e)}>
-              3
-            </div>
-            <div className="index" value="4" onClick={(e) => pageOnClick(e)}>
-              4
-            </div>
-            <div className="index" value="5" onClick={(e) => pageOnClick(e)}>
-              5
-            </div>
-            <div className="index" value="+1" onClick={(e) => pageOnClick(e)}>
-              {`>`}
-            </div>
-          </span>
-        </div>
+        {<Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />}
       </div>
     </div>
   );
