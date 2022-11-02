@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     getAllCourses(JSON.stringify(filterValue));
-  }, [pageIndex, price.length]);
+  }, [filterValue, pageIndex, price.length]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
