@@ -1,10 +1,10 @@
 import './App.css';
 import { getCourses } from './api/apis';
 import { useState, useEffect } from 'react';
-import CourseBoard from './components/CourseBoard';
-import Pagination from './components/Pagination';
 import SearchBar from './components/SearchBar';
 import Category from './components/Category';
+import CourseBoard from './components/CourseBoard';
+import Pagination from './components/Pagination';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -44,7 +44,7 @@ function App() {
     <div className="container">
       <div className="layout">
         <SearchBar setTitle={setTitle} />
-        <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} price={price}/>
+        <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} price={price} />
         <div className="total-count"> 전체 121개 </div>
         <CourseBoard courses={courses}></CourseBoard>
         {/* TODO: pagination 구현 */}
