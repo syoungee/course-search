@@ -8,6 +8,7 @@ function Pagination({ pageIndex, setPageIndex }) {
     } else if (value === '+1') {
       if (value < 20) setPageIndex(parseInt(value) + 1);
     }
+    window.scrollTo(0, 0);
   };
 
   return (
