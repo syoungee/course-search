@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 export const getCourses = async (data) => {
-  const result = await axios.get(process.env.REACT_APP_API_URL, { params: data }).then((res) => {
-    // console.log(res.data);
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  const result = await axios.get(process.env.REACT_APP_API_URL, { params: JSON.parse(data) }, headers).then((res) => {
     return res.data;
   });
   return result;

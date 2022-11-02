@@ -1,25 +1,64 @@
 import './App.css';
 import { getCourses } from './api/apis';
 import { useState, useEffect } from 'react';
+import CourseBoard from './components/CourseBoard';
 
 function App() {
-  const [filter, setFilter] = useState({ title: '', enroll_type: 0, is_free: true });
+  const [title, setTitle] = useState('');
   const [price, setPrice] = useState([]);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
   const [courses, setCourses] = useState([]);
-
-  const value = {
+  const [filterValue, setFilterValue] = useState({
     filter_conditions: {
-      $and: [{ title: `${filter.title}` }, { $or: [{ enroll_type: `${filter.enroll_type}`, is_free: `${filter.is_free}` }] }],
+      $and: [
+        { title: title },
+        {
+          $or: [
+            { enroll_type: 0, is_free: true },
+            { enroll_type: 0, is_free: false },
+          ],
+        },
+      ],
     },
-    offset: pageIndex,
+    offset: (pageIndex - 1) * 10,
+    count: 20,
+  });
+
+  const filterValue1 = {
+    filter_conditions: {
+      $and: [{ title: title }, { $or: [{ enroll_type: 0, is_free: true }] }],
+    },
+    offset: (pageIndex - 1) * 10,
     count: 20,
   };
-  // value.filter_conditions.$and.push({ enroll_type: 0, is_free: false });
+
+  const filterValue2 = {
+    filter_conditions: {
+      $and: [{ title: title }, { $or: [{ enroll_type: 0, is_free: true }] }],
+    },
+    offset: (pageIndex - 1) * 10,
+    count: 20,
+  };
+
+  const filterValue3 = {
+    filter_conditions: {
+      $and: [
+        { title: title },
+        {
+          $or: [
+            { enroll_type: 0, is_free: true },
+            { enroll_type: 0, is_free: false },
+          ],
+        },
+      ],
+    },
+    offset: (pageIndex - 1) * 10,
+    count: 20,
+  };
 
   useEffect(() => {
-    getAllCourses(value);
-  }, [value.offset, price, filter.title]);
+    getAllCourses(JSON.stringify(filterValue3));
+  }, [pageIndex, price.length, title]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
@@ -28,6 +67,12 @@ function App() {
         return res.courses;
       }
     });
+  };
+
+  const inputChange = (e) => {
+    const text = e.target.value;
+    console.log(text);
+    setTitle(text);
   };
 
   const onClick = (e) => {
@@ -42,17 +87,30 @@ function App() {
       e.target.classList.add('clicked');
       setPrice([...price, value]);
     }
+    getFilterData();
+  };
+
+  const getFilterData = () => {
+    console.log(price);
+    if (price.length === 2) {
+      setFilterValue(filterValue3);
+    } else if (price[0] === 'free') {
+      setFilterValue(filterValue1);
+    } else if (price[0] === 'charged') {
+      setFilterValue(filterValue2);
+    } else {
+      setFilterValue(filterValue3);
+    }
   };
 
   const pageOnClick = (e) => {
     const value = e.target.getAttribute('value');
-
     if (value !== '-1' || value !== '+1') {
-      setPageIndex((parseInt(value) - 1) * 10);
+      setPageIndex(parseInt(value));
     } else if (value === '-1') {
-      if (value !== 0) setPageIndex((parseInt(value) - 1) * 10);
+      if (value >= 2) setPageIndex(parseInt(value) - 1);
     } else if (value === '+1') {
-      if (value !== 200) setPageIndex((parseInt(value) + 1) * 10);
+      if (value < 20) setPageIndex(parseInt(value) + 1);
     }
   };
 
@@ -77,7 +135,7 @@ function App() {
             </svg>
           </div>
           <div className="input-area">
-            <input type="text" className="search-box" placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
+            <input type="text" className="search-box" onChange={inputChange} placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
             {
               //TODO: 300ms debounce search
             }
@@ -95,29 +153,9 @@ function App() {
           </div>
         </div>
         <div className="total-count"> 전체 121개 </div>
-        {/* TODO: 해당하는 강의 전체 갯수 가져오기 */}
-        <div className="course-body">
-          {courses?.map((item, index) => {
-            return (
-              <div className="course-card" id={index}>
-                <div className="course-card-body">
-                  <p className="card-label">유료</p>
-                  <p className="card-title">{item.title}</p>
-                  <p className="card-description">{item.short_description}</p>
-                  <div className="card-icon-container">
-                    <div className="card-icon-text">
-                      <p>{`난이도: ${'미설정' || item.info_summary_visibility_dict.level} `}</p>
-                      <p>{`수업: ${'온라인' || item.info_summary_visibility_dict.level} `}</p>
-                      <p>{`기간: ${'무제한' || item.info_summary_visibility_dict.level} `}</p>
-                    </div>
-                    <img src={item.logo_file_url} className="card-logo" alt="logo_file_url" />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          {/* TODO: pagination 구현 */}
-        </div>
+        {<CourseBoard courses={courses}></CourseBoard>}
+
+        {/* TODO: pagination 구현 */}
 
         <div className="page-container">
           <span>
