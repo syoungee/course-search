@@ -1,7 +1,8 @@
 import './App.css';
 import { getCourses } from './api/apis';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import CourseBoard from './components/CourseBoard';
+import debounce from 'lodash.debounce';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -56,8 +57,20 @@ function App() {
     count: 20,
   };
 
+  const inputChange = (e) => {
+    const text = e.target.value;
+    setTitle(text);
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(inputChange, 300);
+  }, []);
+
   useEffect(() => {
     getAllCourses(JSON.stringify(filterValue3));
+    return () => {
+      debouncedResults.cancel();
+    };
   }, [pageIndex, price.length, title]);
 
   const getAllCourses = (data) => {
@@ -67,12 +80,6 @@ function App() {
         return res.courses;
       }
     });
-  };
-
-  const inputChange = (e) => {
-    const text = e.target.value;
-    console.log(text);
-    setTitle(text);
   };
 
   const onClick = (e) => {
@@ -135,10 +142,7 @@ function App() {
             </svg>
           </div>
           <div className="input-area">
-            <input type="text" className="search-box" onChange={inputChange} placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
-            {
-              //TODO: 300ms debounce search
-            }
+            <input type="text" className="search-box" onChange={debouncedResults} placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
           </div>
         </div>
         <div className="select-area">
