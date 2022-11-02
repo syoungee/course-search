@@ -1,6 +1,45 @@
 import './App.css';
+import { getCourses } from './api/apis';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [filter, setFilter] = useState({ title: '', enroll_type: 0, is_free: true });
+  const [price, setPrice] = useState([]);
+  const value = {
+    filter_conditions: {
+      $and: [{ title: `${filter.title}` }, { $or: [{ enroll_type: `${filter.enroll_type}`, is_free: `${filter.is_free}` }] }],
+    },
+    offset: 0,
+    count: 20,
+  };
+  // value.filter_conditions.$and.push({ enroll_type: 0, is_free: false });
+
+  useEffect(() => {
+    getAllCourses(value);
+  }, []);
+
+  const getAllCourses = (data) => {
+    getCourses(data).then((res) => {
+      if (res.course_count) {
+        console.log(res.courses);
+      }
+    });
+  };
+
+  const onClick = (e) => {
+    const value = e.target.getAttribute('value');
+    if (price.includes(value)) {
+      const result = price.filter((item) => {
+        return item !== value;
+      });
+      e.target.classList.remove('clicked');
+      setPrice(result);
+    } else {
+      e.target.classList.add('clicked');
+      setPrice([...price, value]);
+    }
+  };
+
   return (
     <div className="container">
       <div className="layout">
@@ -32,7 +71,12 @@ function App() {
           {/* TODO: 데이터 가져와서 ul li 구현 */}
           <div className="category">가격</div>
           <div className="chip-area">
-            <div className="button">무료</div> <div className="button">유료</div>{' '}
+            <div className="button" value="free" onClick={(e) => onClick(e)}>
+              무료
+            </div>
+            <div className="button" value="charged" onClick={(e) => onClick(e)}>
+              유료
+            </div>
           </div>
         </div>
         <div className="total-count"> 전체 121개 </div>
