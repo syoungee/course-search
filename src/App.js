@@ -46,7 +46,7 @@ function App() {
         <SearchBar setTitle={setTitle} />
         <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} price={price} />
         <div className="total-count"> 전체 121개 </div>
-        <CourseBoard courses={courses}></CourseBoard>
+        <CourseBoard courses={courses} />
         {/* TODO: pagination 구현 */}
         <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
       </div>
