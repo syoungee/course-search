@@ -1,9 +1,9 @@
 import './App.css';
 import { getCourses } from './api/apis';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import CourseBoard from './components/CourseBoard';
 import Pagination from './components/Pagination';
-import debounce from 'lodash.debounce';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -58,21 +58,9 @@ function App() {
     count: 20,
   };
 
-  const inputChange = (e) => {
-    const text = e.target.value;
-    setTitle(text);
-  };
-
-  const debouncedResults = useMemo(() => {
-    return debounce(inputChange, 300);
-  }, []);
-
   useEffect(() => {
     getAllCourses(JSON.stringify(filterValue3));
-    return () => {
-      debouncedResults.cancel();
-    };
-  }, [pageIndex, price.length, title]);
+  }, [pageIndex, price.length]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
@@ -114,27 +102,7 @@ function App() {
   return (
     <div className="container">
       <div className="layout">
-        <div className="search-area">
-          <div className="icon-area">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000000"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-          <div className="input-area">
-            <input type="text" className="search-box" onChange={debouncedResults} placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
-          </div>
-        </div>
+        <SearchBar setTitle={setTitle} />
         <div className="select-area">
           <div className="category">가격</div>
           <div className="chip-area">
@@ -147,10 +115,9 @@ function App() {
           </div>
         </div>
         <div className="total-count"> 전체 121개 </div>
-        {<CourseBoard courses={courses}></CourseBoard>}
-
+        <CourseBoard courses={courses}></CourseBoard>
         {/* TODO: pagination 구현 */}
-        {<Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />}
+        <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
       </div>
     </div>
   );
