@@ -1,3 +1,7 @@
+import { ReactComponent as Calendar } from '../common/calendar.svg';
+import { ReactComponent as Chart } from '../common/chart.svg';
+import { ReactComponent as Laptop } from '../common/laptop.svg';
+
 function CourseBoard({ courses }) {
   const getLabel = (item) => {
     let label = null;
@@ -19,9 +23,18 @@ function CourseBoard({ courses }) {
               <p className="card-description">{item.short_description}</p>
               <div className="card-icon-container">
                 <div className="card-icon-text">
-                  <p>{`난이도: ${'미설정' || item.info_summary_visibility_dict.level} `}</p>
-                  <p>{`수업: ${'온라인' || item.info_summary_visibility_dict.level} `}</p>
-                  <p>{`기간: ${'무제한' || item.info_summary_visibility_dict.level} `}</p>
+                  <p>
+                    <Chart />
+                    {`난이도: ${'미설정' || item.info_summary_visibility_dict.level} `}
+                  </p>
+                  <p>
+                    <Laptop />
+                    {`수업: ${'온라인' || item.info_summary_visibility_dict.level} `}
+                  </p>
+                  <p>
+                    <Calendar />
+                    {`기간: ${'무제한' || item.info_summary_visibility_dict.level} `}
+                  </p>
                 </div>
                 <img src={item.logo_file_url} className="card-logo" alt="logo_file_url" />
               </div>

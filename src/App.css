@@ -71,6 +71,14 @@
   color: white;
 }
 
+svg {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 .total-count {
   text-align: left;
   margin: 30px auto 0px auto;
@@ -95,6 +103,7 @@
   font-weight: bold;
   color: #524fa1;
 }
+
 .card-icon {
   width: 24px;
   height: 24px;
@@ -108,7 +117,7 @@
   size: 12px;
   color: #7d7e80;
   vertical-align: center;
-  width: 50%;
+  width: 60%;
   float: left;
 }
 
