@@ -9,12 +9,13 @@ import Pagination from './components/Pagination';
 function App() {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState([]);
+  const [countCourses, setCountCourses] = useState(0);
   const [pageIndex, setPageIndex] = useState(1);
   const [courses, setCourses] = useState([]);
   const [filterValue, setFilterValue] = useState({
     filter_conditions: {
       $and: [
-        { title: title },
+        { title: '%' + title + '%' },
         {
           $or: [
             { enroll_type: 0, is_free: true },
@@ -28,12 +29,14 @@ function App() {
   });
 
   useEffect(() => {
+    filterValue.filter_conditions.$and[0].title = `%${title}%`;
     getAllCourses(JSON.stringify(filterValue));
-  }, [filterValue, pageIndex, price.length]);
+  }, [title, filterValue, pageIndex, price]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
       if (res.course_count) {
+        setCountCourses(res.course_count);
         setCourses(res.courses);
         return res.courses;
       }
@@ -43,9 +46,9 @@ function App() {
   return (
     <div className="container">
       <div className="layout">
-        <SearchBar setTitle={setTitle} />
+        <SearchBar setTitle={setTitle} title={title} />
         <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} price={price} />
-        <div className="total-count"> 전체 121개 </div>
+        <div className="total-count"> 전체 {countCourses}개 </div>
         <CourseBoard courses={courses} />
         <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
       </div>

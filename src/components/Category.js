@@ -1,7 +1,7 @@
 function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
   const filterValue1 = {
     filter_conditions: {
-      $and: [{ title: title }, { $or: [{ enroll_type: 0, is_free: true }] }],
+      $and: [{ title: '%' + title + '%' }, { $or: [{ enroll_type: 0, is_free: true }] }],
     },
     offset: (pageIndex - 1) * 10,
     count: 20,
@@ -9,7 +9,7 @@ function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
 
   const filterValue2 = {
     filter_conditions: {
-      $and: [{ title: title }, { $or: [{ enroll_type: 0, is_free: true }] }],
+      $and: [{ title: '%' + title + '%' }, { $or: [{ enroll_type: 0, is_free: true }] }],
     },
     offset: (pageIndex - 1) * 10,
     count: 20,
@@ -18,7 +18,7 @@ function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
   const filterValue3 = {
     filter_conditions: {
       $and: [
-        { title: title },
+        { title: '%' + title + '%' },
         {
           $or: [
             { enroll_type: 0, is_free: true },

@@ -1,15 +1,13 @@
 import debounce from 'lodash.debounce';
-import { useMemo } from 'react';
 
 function SearchBar({ setTitle }) {
-  const inputChange = (e) => {
-    const text = e.target.value;
-    setTitle(text);
-  };
+  const debounceOnChange = debounce((e) => {
+    setTitle(e.target.value);
+  }, 300);
 
-  const debouncedResults = useMemo(() => {
-    return debounce(inputChange, 300);
-  }, []);
+  const onChange = (e) => {
+    debounceOnChange(e);
+  };
 
   return (
     <div className="search-area">
@@ -30,7 +28,7 @@ function SearchBar({ setTitle }) {
         </svg>
       </div>
       <div className="input-area">
-        <input type="text" className="search-box" onChange={debouncedResults} placeholder="배우고 싶은 언어, 기술을 검색해 보세요"></input>
+        <input type="text" className="search-box" placeholder="배우고 싶은 언어, 기술을 검색해 보세요" onChange={onChange}></input>
       </div>
     </div>
   );
