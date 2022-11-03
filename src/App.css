@@ -141,16 +141,41 @@
 }
 
 .page-container {
-  position: relative;
   text-align: center;
+  height: 24px;
 }
 
 .index {
+  width: 24px;
+  height: 24px;
+  color: #999;
   cursor: pointer;
-  display: inline;
-  margin-right: 30px;
-  padding: 5px;
+  display: inline-block;
+}
+
+.index-arrow-left,
+.index-arrow-right {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: inline-block;
   user-select: none;
+}
+
+.now {
+  background-color: #524fa1;
+  color: white;
+}
+
+.index-arrow-left.enable,
+.index-arrow-right.enable {
+  color: #222;
+}
+
+.index-arrow-left.disable,
+.index-arrow-right.disable {
+  color: #ccc;
+  cursor: none;
 }
 
 input:focus {

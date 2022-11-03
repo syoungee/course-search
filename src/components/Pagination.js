@@ -1,41 +1,77 @@
+import { useState } from 'react';
 function Pagination({ pageIndex, setPageIndex }) {
+  const [range, setRange] = useState([1, 5]);
+  const [left, setLeft] = useState(false);
+  const [right, setRight] = useState(true);
+
   const pageOnClick = (e) => {
-    const value = e.target.getAttribute('value');
-    if (value !== '-1' || value !== '+1') {
-      setPageIndex(parseInt(value));
-    } else if (value === '-1') {
-      if (value >= 2) setPageIndex(parseInt(value) - 1);
-    } else if (value === '+1') {
-      if (value < 20) setPageIndex(parseInt(value) + 1);
+    const value = parseInt(e.target.getAttribute('value'));
+    setPageIndex(value);
+    setRange([value - 4, value + 4]);
+    if (pageIndex <= 1) {
+      setLeft(false);
+    } else if (pageIndex >= 20) {
+      setRight(false);
+    } else {
+      setLeft(true);
+      setRight(true);
     }
     window.scrollTo(0, 0);
   };
 
+  const arrowOnClick = (e) => {
+    const value = e.target.getAttribute('value');
+    if (value === '-1') {
+      if (pageIndex >= 2) {
+        setPageIndex(pageIndex - 1);
+        setRange([pageIndex - 4, pageIndex + 4]);
+      }
+    } else if (value === '+1') {
+      if (pageIndex < 20) {
+        setPageIndex(pageIndex + 1);
+        setRange([pageIndex - 4, pageIndex + 4]);
+      }
+    }
+
+    if (pageIndex <= 1) {
+      setLeft(false);
+    } else if (pageIndex >= 20) {
+      setRight(false);
+    } else {
+      setLeft(true);
+      setRight(true);
+    }
+    window.scrollTo(0, 0);
+  };
+
+  const list = Array.from({ length: 20 }, (_, i) => i + 1); // [0, 1, ... ,20]
+  let res;
   return (
     <div className="page-container">
-      <span>
-        <div className="index" value="-1" onClick={(e) => pageOnClick(e)}>
-          {`<`}
-        </div>
-        <div className="index" value="1" onClick={(e) => pageOnClick(e)}>
-          1
-        </div>
-        <div className="index" value="2" onClick={(e) => pageOnClick(e)}>
-          2
-        </div>
-        <div className="index" value="3" onClick={(e) => pageOnClick(e)}>
-          3
-        </div>
-        <div className="index" value="4" onClick={(e) => pageOnClick(e)}>
-          4
-        </div>
-        <div className="index" value="5" onClick={(e) => pageOnClick(e)}>
-          5
-        </div>
-        <div className="index" value="+1" onClick={(e) => pageOnClick(e)}>
-          {`>`}
-        </div>
-      </span>
+      <div className={`index-arrow-left ${left ? 'enable' : 'disable'}`} value="-1" onClick={(e) => arrowOnClick(e)}>
+        {`<`}
+      </div>
+      {list
+        .filter((item) => {
+          if (item >= range[0] && item <= range[1]) return item;
+        })
+        .map((item, index) => {
+          if (item == pageIndex) {
+            return (
+              <div className="index now" key={index} value={item} onClick={(e) => pageOnClick(e)}>
+                {item}
+              </div>
+            );
+          } else
+            return (
+              <div className="index" key={index} value={item} onClick={(e) => pageOnClick(e)}>
+                {item}
+              </div>
+            );
+        })}
+      <div className={`index-arrow-right ${right ? 'enable' : 'disable'}`} value="+1" onClick={(e) => arrowOnClick(e)}>
+        {`>`}
+      </div>
     </div>
   );
 }
