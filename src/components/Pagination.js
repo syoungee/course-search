@@ -45,7 +45,7 @@ function Pagination({ pageIndex, setPageIndex }) {
   };
 
   const list = Array.from({ length: 20 }, (_, i) => i + 1); // [0, 1, ... ,20]
-  let res;
+
   return (
     <div className="page-container">
       <div className={`index-arrow-left ${left ? 'enable' : 'disable'}`} value="-1" onClick={(e) => arrowOnClick(e)}>
@@ -53,10 +53,10 @@ function Pagination({ pageIndex, setPageIndex }) {
       </div>
       {list
         .filter((item) => {
-          if (item >= range[0] && item <= range[1]) return item;
+          return item >= range[0] && item <= range[1];
         })
         .map((item, index) => {
-          if (item == pageIndex) {
+          if (item === pageIndex) {
             return (
               <div className="index now" key={index} value={item} onClick={(e) => pageOnClick(e)}>
                 {item}
