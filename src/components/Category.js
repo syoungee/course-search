@@ -9,7 +9,7 @@ function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
 
   const filterValue2 = {
     filter_conditions: {
-      $and: [{ title: '%' + title + '%' }, { $or: [{ enroll_type: 0, is_free: true }] }],
+      $and: [{ title: '%' + title + '%' }, { $or: [{ enroll_type: 0, is_free: false }] }],
     },
     offset: (pageIndex - 1) * 10,
     count: 20,
