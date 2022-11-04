@@ -29,16 +29,15 @@ function App() {
   });
 
   useEffect(() => {
-    filterValue.filter_conditions.$and[0].title = `%${title}%`;
-    getAllCourses(JSON.stringify(filterValue));
-  }, [title, filterValue, pageIndex, price]);
+    filterValue.filter_conditions.$and[0].title = '%' + title + '%';
+    getAllCourses(JSON.stringify({ ...filterValue, filter_conditions: JSON.stringify(filterValue.filter_conditions) }));
+  }, [title, pageIndex, price, price.length]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
-      if (res.course_count) {
+      if (res._result.status === 'ok') {
         setCountCourses(res.course_count);
         setCourses(res.courses);
-        return res.courses;
       }
     });
   };
@@ -47,7 +46,7 @@ function App() {
     <div className="container">
       <div className="layout">
         <SearchBar setTitle={setTitle} title={title} />
-        <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} price={price} />
+        <Category setPrice={setPrice} setFilterValue={setFilterValue} title={title} pageIndex={pageIndex} setPageIndex={setPageIndex} price={price} />
         <div className="total-count"> 전체 {countCourses}개 </div>
         <CourseBoard courses={courses} />
         <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />

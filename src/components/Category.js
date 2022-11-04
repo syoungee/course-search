@@ -1,4 +1,4 @@
-function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
+function Category({ setPrice, setFilterValue, title, pageIndex, setPageIndex, price }) {
   const filterValue1 = {
     filter_conditions: {
       $and: [{ title: '%' + title + '%' }, { $or: [{ enroll_type: 0, is_free: true }] }],
@@ -37,22 +37,24 @@ function Category({ setPrice, setFilterValue, title, pageIndex, price }) {
       const result = price.filter((item) => {
         return item !== value;
       });
+      setPageIndex(1);
       e.target.classList.remove('clicked');
+      getFilterData(result);
       setPrice(result);
     } else {
+      setPageIndex(1);
       e.target.classList.add('clicked');
+      getFilterData([...price, value]);
       setPrice([...price, value]);
     }
-    getFilterData();
   };
 
-  const getFilterData = () => {
-    console.log(price);
-    if (price.length === 2) {
+  const getFilterData = (price_data) => {
+    if (price_data.length === 2) {
       setFilterValue(filterValue3);
-    } else if (price[0] === 'free') {
+    } else if (price_data[0] === 'free') {
       setFilterValue(filterValue1);
-    } else if (price[0] === 'charged') {
+    } else if (price_data[0] === 'charged') {
       setFilterValue(filterValue2);
     } else {
       setFilterValue(filterValue3);
