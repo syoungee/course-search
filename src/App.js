@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     filterValue.filter_conditions.$and[0].title = '%' + title + '%';
     getAllCourses(JSON.stringify({ ...filterValue, filter_conditions: JSON.stringify(filterValue.filter_conditions) }));
-  }, [title, pageIndex, price, price.length]);
+  }, [filterValue, title, pageIndex, price, price.length]);
 
   const getAllCourses = (data) => {
     getCourses(data).then((res) => {
