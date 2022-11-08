@@ -6,45 +6,34 @@ function Pagination({ pageIndex, setPageIndex }) {
 
   const pageOnClick = (e) => {
     const value = parseInt(e.target.getAttribute('value'));
-    setPageIndex(value);
+    const goLeft = value === 1 ? false : true;
+    const goRight = value === 20 ? false : true;
+
+    setLeft(goLeft);
+    setRight(goRight);
     setRange([value - 4, value + 4]);
-    if (pageIndex <= 1) {
-      setLeft(false);
-    } else if (pageIndex >= 20) {
-      setRight(false);
-    } else {
-      setLeft(true);
-      setRight(true);
-    }
+    setPageIndex(value);
+
     window.scrollTo(0, 0);
   };
 
   const arrowOnClick = (e) => {
     const value = e.target.getAttribute('value');
-    if (value === '-1') {
-      if (pageIndex >= 2) {
-        setPageIndex(pageIndex - 1);
-        setRange([pageIndex - 4, pageIndex + 4]);
-      }
-    } else if (value === '+1') {
-      if (pageIndex < 20) {
-        setPageIndex(pageIndex + 1);
-        setRange([pageIndex - 4, pageIndex + 4]);
-      }
-    }
+    const canPrev = pageIndex >= 2 ? true : false;
+    const canNext = pageIndex < 20 ? true : false;
+    const nextIndex = value === '-1' && canPrev ? pageIndex - 1 : value === '+1' && canNext ? pageIndex + 1 : pageIndex;
+    const goLeft = nextIndex === 1 ? false : true;
+    const goRight = nextIndex === 20 ? false : true;
 
-    if (pageIndex <= 1) {
-      setLeft(false);
-    } else if (pageIndex >= 20) {
-      setRight(false);
-    } else {
-      setLeft(true);
-      setRight(true);
-    }
+    setLeft(goLeft);
+    setRight(goRight);
+    if (canPrev || canNext) setRange([nextIndex - 4, nextIndex + 4]);
+    setPageIndex(nextIndex);
+
     window.scrollTo(0, 0);
   };
 
-  const list = Array.from({ length: 20 }, (_, i) => i + 1); // [0, 1, ... ,20]
+  const list = Array.from({ length: 20 }, (_, i) => i + 1); // [1, ... ,20]
 
   return (
     <div className="page-container">
@@ -56,18 +45,11 @@ function Pagination({ pageIndex, setPageIndex }) {
           return item >= range[0] && item <= range[1];
         })
         .map((item, index) => {
-          if (item === pageIndex) {
-            return (
-              <div className="index now" key={index} value={item} onClick={(e) => pageOnClick(e)}>
-                {item}
-              </div>
-            );
-          } else
-            return (
-              <div className="index" key={index} value={item} onClick={(e) => pageOnClick(e)}>
-                {item}
-              </div>
-            );
+          return (
+            <div className={`index ${item === pageIndex ? 'now' : ''}`} key={index} value={item} onClick={(e) => pageOnClick(e)}>
+              {item}
+            </div>
+          );
         })}
       <div className={`index-arrow-right ${right ? 'enable' : 'disable'}`} value="+1" onClick={(e) => arrowOnClick(e)}>
         {`>`}
