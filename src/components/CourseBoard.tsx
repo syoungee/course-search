@@ -1,9 +1,9 @@
 import { ReactComponent as Calendar } from '../common/calendar.svg';
 import { ReactComponent as Chart } from '../common/chart.svg';
 import { ReactComponent as Laptop } from '../common/laptop.svg';
-import { Course } from '../types';
+import { Course, Courses } from '../types';
 
-function CourseBoard({ courses }: any) {
+function CourseBoard({ courses }: Courses) {
   const getLabel = (item: Course) => {
     let label = null;
     if (item.enroll_type === 5) label = '구독';

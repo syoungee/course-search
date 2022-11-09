@@ -22,3 +22,5 @@ export type Course = {
   enroll_type: number;
   is_free: boolean;
 };
+
+export type Courses = { courses: Array<Course> };
