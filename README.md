@@ -5,16 +5,20 @@
 course search web-site in elice academy
 
 <p>
-  <img src="https://img.shields.io/badge/React-^18.2.0-61DAFB?style=flat&logo=React&logoColor=white"/> 
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> 
+  <img src="https://img.shields.io/badge/typescript-3178c6?style=flat&logo=typescript&logoColor=white"/>
   <br/>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
   <img src="https://img.shields.io/badge/Javscript-F7DF1E?style=flat&logo=Javascript&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS-DD3A0A?style=flat&logo=CSS3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SASS-CC6699?style=flat&logo=SASS&logoColor=white"/>
 </p>
 </div>
 
 ## ⏳ 개발 기간
 
-2022/11/02 ~ 2022/11/04
+2022/11/02 ~ 2022/11/04 기능 구현
+<br/>
+2022/11/08 ~ 2022/11/09 refactor & ts
 <br/>
 
 ## 📷 프로젝트 시연
@@ -53,15 +57,23 @@ src
  ┃ ┣ laptop.svg
  ┃ ┗ search.svg
  ┣ components
- ┃ ┣ Category.js
- ┃ ┣ CourseBoard.js
- ┃ ┣ Pagination.js
- ┃ ┗ SearchBar.js
- ┣ App.css
- ┣ App.js
+ ┃ ┣ lagacy
+ ┃ ┃ ┣ Category.js
+ ┃ ┃ ┣ CourseBoard.js
+ ┃ ┃ ┣ Pagination.js
+ ┃ ┃ ┗ SearchBar.js
+ ┃ ┣ Category.tsx
+ ┃ ┣ CourseBoard.tsx
+ ┃ ┣ Pagination.tsx
+ ┃ ┗ SearchBar.tsx
+ ┣ types
+ ┃ ┗ index.ts
+ ┣ App.scss
  ┣ App.test.js
+ ┣ App.tsx
  ┣ index.css
- ┗ index.js
+ ┣ index.tsx
+ ┗ shims.d.ts
 ```
 
 ## 실행 방법
