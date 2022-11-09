@@ -5,6 +5,14 @@ type PaginationProps = {
   pageIndex: number;
 };
 
+type ConditionProps = {
+  goLeft: boolean;
+  goRight: boolean;
+  canPrev: boolean;
+  canNext: boolean;
+  nextIndex: number;
+};
+
 const MAX_PAGE_NUMBER = 20;
 
 const isNotFirst = (num: number) => num > 1;
@@ -15,7 +23,7 @@ function Pagination({ pageIndex, setPageIndex }: PaginationProps) {
   const [left, setLeft] = useState(false);
   const [right, setRight] = useState(true);
 
-  const move = ({ goLeft, goRight, canPrev, canNext, nextIndex }: any) => {
+  const move = ({ goLeft, goRight, canPrev, canNext, nextIndex }: ConditionProps) => {
     setLeft(goLeft);
     setRight(goRight);
     if (canPrev || canNext) setRange([nextIndex - 4, nextIndex + 4]);
